@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_notes_app/pages/loginpage.dart';
 import 'package:my_notes_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   //go to sign in page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => SigninPage()),
                   );
                 },
                 style: TextButton.styleFrom(
