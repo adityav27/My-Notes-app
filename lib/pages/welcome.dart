@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_notes_app/pages/register.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -46,33 +47,21 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           //SIGN up Button
-          Container(
-            width: 284,
-            height: 59,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              boxShadow: [
-                BoxShadow(
-                  spreadRadius: 2,
-                  color: const Color.fromARGB(255, 79, 73, 73),
-                  blurRadius: 4,
-                  offset: Offset(0, 5),
-                ),
-              ],
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterPage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+              fixedSize: Size(284, 59),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Sign up',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.normal,
-                ),
-                textAlign: TextAlign.center,
-              ),
+            child: Text(
+              'Sign up',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 15),
@@ -96,6 +85,10 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 onPressed: () {
                   //go to sign in page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.transparent,
@@ -146,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          Color.fromARGB(255, 218, 172, 255),
-          Color.fromARGB(255, 133, 83, 174),
+          Color.fromARGB(255, 209, 156, 252),
+          Color.fromARGB(255, 113, 61, 156),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
