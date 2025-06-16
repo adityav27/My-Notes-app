@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes_app/pages/components/mybutton.dart';
 import 'package:my_notes_app/pages/components/mytextfield.dart';
 import 'package:my_notes_app/pages/welcome.dart';
 
@@ -9,8 +11,15 @@ class SigninPage extends StatefulWidget {
   State<SigninPage> createState() => _SigninPageState();
 }
 
-final usernameController = TextEditingController();
+final emailController = TextEditingController();
 final passwordController = TextEditingController();
+
+void signUserIn() async {
+  await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: emailController.text,
+    password: passwordController.text,
+  );
+}
 
 class _SigninPageState extends State<SigninPage> {
   @override
@@ -32,8 +41,8 @@ class _SigninPageState extends State<SigninPage> {
             dividerBar(),
             SizedBox(height: 40),
             MyTextField(
-              controller: usernameController,
-              hintText: 'Enter your username',
+              controller: emailController,
+              hintText: 'Enter your email address',
               obsecureText: false,
             ),
             SizedBox(height: 50),
@@ -44,6 +53,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             SizedBox(height: 2),
             forgotpass(),
+            Mybutton(onTap: signUserIn),
             SizedBox(height: 40),
             goToHome(context),
             SizedBox(height: 1),
@@ -54,119 +64,119 @@ class _SigninPageState extends State<SigninPage> {
     );
     return Scaffold(body: container);
   }
+}
 
-  Align toonIMG() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Transform.translate(
-        offset: Offset(80, -50), // move 50px outside to the right
-        child: Image.asset('assets/reflecting.png', width: 500),
+Align toonIMG() {
+  return Align(
+    alignment: Alignment.centerRight,
+    child: Transform.translate(
+      offset: Offset(80, -50), // move 50px outside to the right
+      child: Image.asset('assets/reflecting.png', width: 500),
+    ),
+  );
+}
+
+Padding goToHome(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(right: 150.0),
+    child: TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      },
+      child: Text(
+        textAlign: TextAlign.center,
+        "Don't have a account\n"
+        "sign up",
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
 
-  Padding goToHome(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 150.0),
-      child: TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-          );
-        },
+Row forgotpass() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(right: 50),
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            'Forgot Password?',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Row dividerBar() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Expanded(child: Divider(color: Colors.black, thickness: 2, indent: 10)),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Text(
-          textAlign: TextAlign.center,
-          "Don't have a account\n"
-          "sign up",
+          'or log in with email',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: const Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),
-    );
-  }
+      Expanded(
+        child: Divider(color: Colors.black, thickness: 2, endIndent: 10),
+      ),
+    ],
+  );
+}
 
-  Row forgotpass() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+Text title() {
+  return Text(
+    'Log in',
+    style: TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+  );
+}
+
+ElevatedButton googleButton() {
+  return ElevatedButton(
+    onPressed: () {},
+
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.black,
+      foregroundColor: Colors.white,
+      fixedSize: Size(306, 56),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 50),
-          child: TextButton(
-            onPressed: () {},
-            child: Text(
-              'Forgot Password?',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
+        Image.asset('assets/google.png', width: 20),
+        SizedBox(width: 10),
+        Text(
+          'Log in with Google',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         ),
       ],
-    );
-  }
-
-  Row dividerBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Expanded(child: Divider(color: Colors.black, thickness: 2, indent: 10)),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'or log in with email',
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 0, 0, 0),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Divider(color: Colors.black, thickness: 2, endIndent: 10),
-        ),
-      ],
-    );
-  }
-
-  Text title() {
-    return Text(
-      'Log in',
-      style: TextStyle(
-        fontSize: 40,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  ElevatedButton googleButton() {
-    return ElevatedButton(
-      onPressed: () {},
-
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        fixedSize: Size(306, 56),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/google.png', width: 20),
-          SizedBox(width: 10),
-          Text(
-            'Log in with Google',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
+    ),
+  );
 }
 
 BoxDecoration backgroundColor() {

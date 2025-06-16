@@ -56,7 +56,6 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Image.asset('assets/whoa.png', width: 250),
-
                 goToHome(context),
               ],
             ),
