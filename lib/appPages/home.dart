@@ -14,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  User? curUser = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Center(child: Text('logged in')),
+      body: Center(child: Text('logged in as: ${curUser?.email ?? "Unknown"}')),
     );
   }
 }

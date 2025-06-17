@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC="-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.example.my_notes_app</string><!-- this must match your Flutter iOS bundleId -->
 	<key>API_KEY</key>
 	<string>AIzaSyBSVSiyB7JNhvcYNsv4nR9HrrVK4HPZv80</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +11,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.myNotesApp</string>
+	<string>com.example.my_notes_app</string><!-- match this with CFBundleIdentifier -->
 	<key>PROJECT_ID</key>
 	<string>my-notes-app-21e4b</string>
 	<key>STORAGE_BUCKET</key>

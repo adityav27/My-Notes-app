@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Mybutton extends StatelessWidget {
-  final Function()? onTap;
+  final VoidCallback? onTap;
 
   const Mybutton({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        onTap;
-      },
-
+      onPressed: onTap,
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,

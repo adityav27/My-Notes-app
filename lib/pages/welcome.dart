@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 80),
-            welcomeMSG(),
+            welcomeMSG(), // Fixed here (removed Expanded in its definition).
             SizedBox(height: 30),
             signButton(),
             toonIMG(),
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(
                   'Already have an account',
                   style: TextStyle(
-                    color: const Color.fromARGB(255, 214, 210, 210),
+                    color: Color.fromARGB(255, 214, 210, 210),
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.normal,
@@ -110,28 +110,27 @@ class _LoginPageState extends State<LoginPage> {
   Padding welcomeMSG() {
     return Padding(
       padding: const EdgeInsets.all(0),
-      child: Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //logo
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(Icons.favorite, size: 50),
+      child: Column(
+        // Removed Expanded here
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //logo
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(Icons.favorite, size: 50),
+          ),
+          SizedBox(height: 10),
+          //welcome msg
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              'Welcome!',
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            //welcome msg
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                'Welcome!',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              ),
-            ),
-            //picture 1
-            SvgPicture.asset('assets/clouds.svg', width: 430),
-          ],
-        ),
+          ),
+          //picture 1
+          SvgPicture.asset('assets/clouds.svg', width: 430),
+        ],
       ),
     );
   }

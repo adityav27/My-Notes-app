@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes_app/pages/auth.dart';
 import 'package:my_notes_app/pages/components/mybutton.dart';
 import 'package:my_notes_app/pages/components/mytextfield.dart';
 import 'package:my_notes_app/pages/welcome.dart';
@@ -11,24 +12,52 @@ class SigninPage extends StatefulWidget {
   State<SigninPage> createState() => _SigninPageState();
 }
 
-final emailController = TextEditingController();
-final passwordController = TextEditingController();
-
-void signUserIn() async {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: emailController.text,
-    password: passwordController.text,
-  );
-}
-
 class _SigninPageState extends State<SigninPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void signUserIn(BuildContext context) async {
+    try {
+      debugPrint("Starting sign in process");
+      UserCredential credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          );
+      debugPrint("Login successful for: ${credential.user?.email}");
+
+      // Navigate back to AuthPage
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AuthPage()),
+      );
+    } catch (e) {
+      debugPrint("Login failed with error: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var container = Container(
       width: 500,
       height: double.infinity,
-      //background color
-      decoration: backgroundColor(),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 209, 156, 252),
+            Color.fromARGB(255, 113, 61, 156),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +82,7 @@ class _SigninPageState extends State<SigninPage> {
             ),
             SizedBox(height: 2),
             forgotpass(),
-            Mybutton(onTap: signUserIn),
+            Mybutton(onTap: () => signUserIn(context)),
             SizedBox(height: 40),
             goToHome(context),
             SizedBox(height: 1),
@@ -158,7 +187,9 @@ Text title() {
 
 ElevatedButton googleButton() {
   return ElevatedButton(
-    onPressed: () {},
+    onPressed: () {
+      debugPrint('hey');
+    },
 
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.black,
