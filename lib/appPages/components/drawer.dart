@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
                       child: Icon(
                         Icons.book,
                         size: 100,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: const Color.fromARGB(255, 205, 68, 18),
                       ),
                     ),
                     SizedBox(height: 10),
