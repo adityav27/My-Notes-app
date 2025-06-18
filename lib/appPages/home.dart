@@ -92,10 +92,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 135, 124, 120),
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 80, 80, 80),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.only(right: 10.0, bottom: 10),
             child: Image.asset('assets/fire1.png', width: 50),
           ),
         ],
@@ -157,6 +159,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 237, 60, 16),
         onPressed: openNoteBox,
         child: Icon(Icons.add),
       ),
@@ -172,6 +175,7 @@ class _HomePageState extends State<HomePage> {
     String timeString,
   ) {
     return Card(
+      color: const Color.fromARGB(255, 86, 80, 80),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -190,12 +194,13 @@ class _HomePageState extends State<HomePage> {
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     data['content'] as String? ?? '',
-                    style: const TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
                   ),
                 ],
               ),
@@ -212,7 +217,11 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.edit, size: 20),
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         // TODO: open edit dialog, passing noteId and data
                         openEditNoteBox(
@@ -227,7 +236,11 @@ class _HomePageState extends State<HomePage> {
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.delete, size: 20),
+                      icon: const Icon(
+                        Icons.delete,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                       onPressed: () async {
                         // Optional: confirm deletion
                         final confirm = await showDialog<bool>(
