@@ -15,7 +15,7 @@ class MyDrawer extends StatelessWidget {
     User? curUser = FirebaseAuth.instance.currentUser;
 
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: const Color.fromARGB(255, 145, 142, 142),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
