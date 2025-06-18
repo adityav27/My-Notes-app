@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                       ),
                       onPressed: () async {
-                        // Optional: confirm deletion
+                        // Show confirmation dialog
                         final confirm = await showDialog<bool>(
                           context: context,
                           builder: (context) => AlertDialog(
@@ -262,13 +262,23 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         );
+
+                        // After dialog returns, widget might have been unmounted
+                        if (!context.mounted) return;
+
                         if (confirm == true) {
                           try {
                             await FirestoreService().deleteNote(noteId: noteId);
+
+                            // After deletion, check again before using context
+                            if (!context.mounted) return;
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Note deleted')),
                             );
                           } catch (e) {
+                            if (!context.mounted) return;
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Error deleting note: $e'),
