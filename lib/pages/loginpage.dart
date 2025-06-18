@@ -12,27 +12,65 @@ class SigninPage extends StatefulWidget {
   State<SigninPage> createState() => _SigninPageState();
 }
 
+// show error msg
+void showErrorMSG(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 75, 72, 72),
+        title: Center(
+          child: Text(
+            message,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
 class _SigninPageState extends State<SigninPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   void signUserIn(BuildContext context) async {
     try {
+      // Show loading spinner
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Prevent closing by tapping outside
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+
       debugPrint("Starting sign in process");
+
       UserCredential credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
           );
+
       debugPrint("Login successful for: ${credential.user?.email}");
 
-      // Navigate back to AuthPage
-      Navigator.push(
+      // Close the loading spinner
+      Navigator.pop(context);
+
+      // Navigate to AuthPage
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => AuthPage()),
       );
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      // Close the loading spinner
+      Navigator.pop(context);
+
       debugPrint("Login failed with error: $e");
+      showErrorMSG(context, e.code);
     }
   }
 
@@ -48,16 +86,7 @@ class _SigninPageState extends State<SigninPage> {
     var container = Container(
       width: 500,
       height: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 209, 156, 252),
-            Color.fromARGB(255, 113, 61, 156),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      decoration: backgroundColor(),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,8 +243,8 @@ BoxDecoration backgroundColor() {
   return BoxDecoration(
     gradient: LinearGradient(
       colors: [
-        Color.fromARGB(255, 209, 156, 252),
-        Color.fromARGB(255, 113, 61, 156),
+        Color.fromARGB(255, 230, 139, 42),
+        Color.fromARGB(255, 163, 11, 11),
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

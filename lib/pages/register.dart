@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes_app/pages/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_notes_app/pages/components/mytextfield.dart';
 import 'package:my_notes_app/pages/welcome.dart';
 
@@ -9,8 +11,84 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
+// show error msg
+void showErrorMSG(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: const Color.fromARGB(255, 75, 72, 72),
+        title: Center(
+          child: Text(
+            message,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+void signUserUp(BuildContext context) async {
+  final email = emailController.text.trim();
+  final pass1 = pass1Controller.text.trim();
+  final pass2 = pass2Controller.text.trim();
+
+  if (pass1 != pass2) {
+    // Show password mismatch error
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text("Passwords do not match."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("OK"),
+          ),
+        ],
+      ),
+    );
+    return;
+  }
+
+  try {
+    // Show loading spinner
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+
+    debugPrint("Starting registration process");
+
+    UserCredential credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: pass1);
+
+    debugPrint("Registration successful for: ${credential.user?.email}");
+
+    // Close the spinner
+    Navigator.pop(context);
+
+    // Navigate to AuthPage
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => AuthPage()),
+    );
+  } on FirebaseAuthException catch (e) {
+    Navigator.pop(context); // Close the spinner if error occurs
+
+    debugPrint("Registration failed with error: $e");
+    showErrorMSG(context, e.code); // Display a readable error
+  }
+}
+
 //getting username and both passwords
-final usernameController = TextEditingController();
+final emailController = TextEditingController();
 final pass1Controller = TextEditingController();
 final pass2Controller = TextEditingController();
 
@@ -33,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
             dividerBar(),
             SizedBox(height: 20),
             MyTextField(
-              controller: usernameController,
+              controller: emailController,
               obsecureText: false,
               hintText: 'Enter your username',
             ),
@@ -136,7 +214,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   ElevatedButton createButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        // create user
+        signUserUp(context);
+      },
 
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,
@@ -178,8 +259,8 @@ BoxDecoration backgroundColor() {
   return BoxDecoration(
     gradient: LinearGradient(
       colors: [
-        Color.fromARGB(255, 209, 156, 252),
-        Color.fromARGB(255, 113, 61, 156),
+        Color.fromARGB(255, 230, 139, 42),
+        Color.fromARGB(255, 163, 11, 11),
       ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

@@ -112,20 +112,25 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.all(0),
       child: Column(
         // Removed Expanded here
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           //logo
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Icon(Icons.favorite, size: 50),
+            child: Image.asset(
+              'assets/fire1.png',
+              width: 50,
+              color: Colors.black,
+            ),
           ),
           SizedBox(height: 10),
           //welcome msg
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'Welcome!',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              'W E L C O M E   T O   F I R E   N O T E S',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           //picture 1
@@ -139,8 +144,8 @@ class _LoginPageState extends State<LoginPage> {
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          Color.fromARGB(255, 209, 156, 252),
-          Color.fromARGB(255, 113, 61, 156),
+          Color.fromARGB(255, 230, 139, 42),
+          Color.fromARGB(255, 163, 11, 11),
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
