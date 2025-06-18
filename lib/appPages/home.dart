@@ -14,7 +14,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //controller
+  final TextEditingController noteController = TextEditingController();
+
+  //get user email
   User? curUser = FirebaseAuth.instance.currentUser;
+
+  void openNoteBox() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: TextField(controller: noteController),
+        actions: [ElevatedButton(onPressed: () {}, child: Text('S A V E'))],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +36,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(title: Text('Welcome')),
       drawer: MyDrawer(),
       body: Center(child: Text('logged in as: ${curUser?.email ?? "Unknown"}')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: openNoteBox,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
